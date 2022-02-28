@@ -25,7 +25,7 @@ class _news_itemState extends State<news_item> {
             MaterialPageRoute(
               builder: (context) => widget.json.length > widget.index + 1
                   ? news_item(json: widget.json, index: widget.index + 1)
-                  : end_of_feed(),
+                  : const end_of_feed(),
             ));
       },
       onSwipeDown: () {
@@ -38,14 +38,15 @@ class _news_itemState extends State<news_item> {
             SafeArea(
               child: Column(
                 children: [
-                  Image.network(widget.json[widget.index]['urlToImage'],
+                  Image.network(
+                      widget.json[widget.index]['urlToImage'].toString(),
                       errorBuilder: (context, e, stack) => Image.network(
                           'https://freepikpsd.com/file/2019/10/image-not-available-png-2-Transparent-Images-Free.png')),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 16),
                     child: Text(
-                      widget.json[widget.index]['title'],
+                      widget.json[widget.index]['title'] ?? 'No title found',
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -55,7 +56,8 @@ class _news_itemState extends State<news_item> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      widget.json[widget.index]['description'],
+                      widget.json[widget.index]['description'] ??
+                          'No description found',
                       style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 16,
@@ -68,7 +70,7 @@ class _news_itemState extends State<news_item> {
             ),
             TextButton(
               onPressed: () {
-                launch(widget.json[widget.index]['url']);
+                launch(widget.json[widget.index]['url'].toString());
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black87)),
